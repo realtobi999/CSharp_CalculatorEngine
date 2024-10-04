@@ -1,3 +1,7 @@
 test:
 	clear
-	cd src/CalculatorEngine.Tests && dotnet test
+	cd src/Calculator.Tests && dotnet test
+
+build:
+	clear
+	cd src && dotnet build
