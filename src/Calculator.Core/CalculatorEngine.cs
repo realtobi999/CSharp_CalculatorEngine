@@ -34,7 +34,7 @@ public class CalculatorEngine
             {
                 tokens[i + 1] = "-" + tokens[i + 1];
 
-                if (i != 0 && int.TryParse(tokens[i-1], out _))
+                if (i != 0 && int.TryParse(tokens[i - 1], out _))
                 {
                     tokens[i] = "+";
                 }
@@ -44,6 +44,37 @@ public class CalculatorEngine
                 }
             }
         }
+
+        foreach (var oprt in tokens.FindAll(token => token == "/"))
+        {
+            var i = tokens.IndexOf(oprt);
+
+            if (i != 0 && int.TryParse(tokens[i - 1], out int num3) && int.TryParse(tokens[i + 1], out int num4))
+            {
+                if (num4 == 0)
+                {
+                    throw new DivideByZeroException();
+                }
+
+                tokens[i - 1] = (num3 / num4).ToString();
+
+                tokens.RemoveAt(i + 1);
+                tokens.RemoveAt(i);
+            }
+        };
+
+        foreach (var oprt in tokens.FindAll(token => token == "*"))
+        {
+            var i = tokens.IndexOf(oprt);
+
+            if (i != 0 && int.TryParse(tokens[i - 1], out int num3) && int.TryParse(tokens[i + 1], out int num4))
+            {
+                tokens[i - 1] = (num3 * num4).ToString();
+
+                tokens.RemoveAt(i + 1);
+                tokens.RemoveAt(i);
+            }
+        };
 
         // iterate through the tokens and apply operators until only one number remains
         while (true)
@@ -61,25 +92,7 @@ public class CalculatorEngine
                     tokens.RemoveAt(2);
                     tokens.RemoveAt(1);
                 }
-                else if (tokens[1] == "*" && int.TryParse(tokens[2], out int num4))
-                {
-                    tokens[0] = (num2 * num4).ToString();
 
-                    tokens.RemoveAt(2);
-                    tokens.RemoveAt(1);
-                }
-                else if (tokens[1] == "/" && int.TryParse(tokens[2], out int num5))
-                {
-                    if (num5 == 0)
-                    {
-                        throw new DivideByZeroException();
-                    }
-
-                    tokens[0] = (num2 / num5).ToString();
-
-                    tokens.RemoveAt(2);
-                    tokens.RemoveAt(1);
-                }
             }
         }
 

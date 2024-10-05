@@ -6,7 +6,7 @@ namespace Calculator.Tests.Engine;
 public class BasicArithmeticsTests
 {
     [Fact]
-    public void AdditionShouldWork()
+    public void Solve_AdditionShouldWork()
     {
         // prepare
         var engine = new CalculatorEngine();
@@ -18,7 +18,7 @@ public class BasicArithmeticsTests
     }
 
     [Fact]
-    public void SubtractionShouldWork()
+    public void Solve_SubtractionShouldWork()
     {
         // prepare
         var engine = new CalculatorEngine();
@@ -32,7 +32,7 @@ public class BasicArithmeticsTests
     }
 
     [Fact]
-    public void SubtractionAndAdditionShouldWorkTogether()
+    public void Solve_SubtractionAndAdditionShouldWorkTogether()
     {
         // prepare
         var engine = new CalculatorEngine();
@@ -43,7 +43,7 @@ public class BasicArithmeticsTests
     }
 
     [Fact]
-    public void MultiplicationShouldWork()
+    public void Solve_MultiplicationShouldWork()
     {
         // prepare
         var engine = new CalculatorEngine();
@@ -57,7 +57,7 @@ public class BasicArithmeticsTests
 
 
     [Fact]
-    public void DivisionShouldWork()
+    public void Solve_DivisionShouldWork()
     {
         // prepare
         var engine = new CalculatorEngine();
@@ -70,5 +70,16 @@ public class BasicArithmeticsTests
         engine.Solve("-4/1").Should().Be(-4);
         engine.Solve("0/1").Should().Be(0);
         Assert.Throws<DivideByZeroException>(() => engine.Solve("0/0"));
+    }
+
+    [Fact]
+    public void Solve_OrderOfOperationsShouldWork()
+    {
+        // prepare
+        var engine = new CalculatorEngine();
+
+        // act & assert
+        engine.Solve("18/3-7+2*5").Should().Be(9);
+        engine.Solve("7-24/8*4+6").Should().Be(1);
     }
 }
