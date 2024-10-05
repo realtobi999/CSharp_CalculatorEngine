@@ -1,15 +1,16 @@
 using Calculator.Core;
+using Calculator.Core.Interfaces;
 using FluentAssertions;
 
-namespace Calculator.Tests.Engine;
+namespace Calculator.Tests.Unit;
 
-public class BasicArithmeticsTests
+public class CalculatorTests
 {
     [Fact]
-    public void Solve_AdditionShouldWork()
+    public void Calculator_Solve_AdditionShouldWork()
     {
         // prepare
-        var engine = new CalculatorEngine();
+        var engine = new XCalculator(new QueryLexer(new Tokenizer()), new QueryEngine());
 
         // act & assert
         engine.Solve("3+3").Should().Be(6);
@@ -18,10 +19,10 @@ public class BasicArithmeticsTests
     }
 
     [Fact]
-    public void Solve_SubtractionShouldWork()
+    public void Calculator_Solve_SubtractionShouldWork()
     {
         // prepare
-        var engine = new CalculatorEngine();
+        var engine = new XCalculator(new QueryLexer(new Tokenizer()), new QueryEngine());
 
         // act & assert
         engine.Solve("9-3").Should().Be(6);
@@ -32,10 +33,10 @@ public class BasicArithmeticsTests
     }
 
     [Fact]
-    public void Solve_SubtractionAndAdditionShouldWorkTogether()
+    public void Calculator_Solve_SubtractionAndAdditionShouldWorkTogether()
     {
         // prepare
-        var engine = new CalculatorEngine();
+        var engine = new XCalculator(new QueryLexer(new Tokenizer()), new QueryEngine());
 
         // act & assert
         engine.Solve("90+30-90+30").Should().Be(60);
@@ -43,10 +44,10 @@ public class BasicArithmeticsTests
     }
 
     [Fact]
-    public void Solve_MultiplicationShouldWork()
+    public void Calculator_Solve_MultiplicationShouldWork()
     {
         // prepare
-        var engine = new CalculatorEngine();
+        var engine = new XCalculator(new QueryLexer(new Tokenizer()), new QueryEngine());
 
         // act & assert
         engine.Solve("2*2").Should().Be(4);
@@ -57,10 +58,10 @@ public class BasicArithmeticsTests
 
 
     [Fact]
-    public void Solve_DivisionShouldWork()
+    public void Calculator_Solve_DivisionShouldWork()
     {
         // prepare
-        var engine = new CalculatorEngine();
+        var engine = new XCalculator(new QueryLexer(new Tokenizer()), new QueryEngine());
 
         // act & assert
         engine.Solve("2/2").Should().Be(1);
@@ -73,13 +74,29 @@ public class BasicArithmeticsTests
     }
 
     [Fact]
-    public void Solve_OrderOfOperationsShouldWork()
+    public void Calculator_Solve_Exponentiation()
     {
         // prepare
-        var engine = new CalculatorEngine();
+        var engine = new XCalculator(new QueryLexer(new Tokenizer()), new QueryEngine());
+
+        // act & assert
+        engine.Solve("2^2").Should().Be(4);
+        engine.Solve("4^0.5").Should().Be(2);
+        engine.Solve("2^2^2").Should().Be(16);
+        engine.Solve("2^1").Should().Be(2);
+        engine.Solve("-4^2").Should().Be(16);
+        engine.Solve("0^0").Should().Be(1);
+    }
+
+    [Fact]
+    public void Calculator_Solve_OrderOfOperationsShouldWork()
+    {
+        // prepare
+        var engine = new XCalculator(new QueryLexer(new Tokenizer()), new QueryEngine());
 
         // act & assert
         engine.Solve("18/3-7+2*5").Should().Be(9);
         engine.Solve("7-24/8*4+6").Should().Be(1);
+        engine.Solve("6*4/12+72/8-9").Should().Be(2);
     }
 }
