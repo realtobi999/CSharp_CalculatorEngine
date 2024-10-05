@@ -1,5 +1,3 @@
-using System.Net.Security;
-
 namespace Calculator.Core;
 
 public class CalculatorEngine
@@ -36,13 +34,13 @@ public class CalculatorEngine
             {
                 tokens[i + 1] = "-" + tokens[i + 1];
 
-                if (i == 0)
+                if (i != 0 && int.TryParse(tokens[i-1], out _))
                 {
-                    tokens.RemoveAt(i);
+                    tokens[i] = "+";
                 }
                 else
                 {
-                    tokens[i] = "+";
+                    tokens.RemoveAt(i);
                 }
             }
         }
@@ -59,6 +57,25 @@ public class CalculatorEngine
                 if (tokens[1] == "+" && int.TryParse(tokens[2], out int num3))
                 {
                     tokens[0] = (num2 + num3).ToString();
+
+                    tokens.RemoveAt(2);
+                    tokens.RemoveAt(1);
+                }
+                else if (tokens[1] == "*" && int.TryParse(tokens[2], out int num4))
+                {
+                    tokens[0] = (num2 * num4).ToString();
+
+                    tokens.RemoveAt(2);
+                    tokens.RemoveAt(1);
+                }
+                else if (tokens[1] == "/" && int.TryParse(tokens[2], out int num5))
+                {
+                    if (num5 == 0)
+                    {
+                        throw new DivideByZeroException();
+                    }
+
+                    tokens[0] = (num2 / num5).ToString();
 
                     tokens.RemoveAt(2);
                     tokens.RemoveAt(1);

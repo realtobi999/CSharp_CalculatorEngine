@@ -41,4 +41,34 @@ public class BasicArithmeticsTests
         engine.Solve("90+30-90+30").Should().Be(60);
         engine.Solve("22-0-50+30").Should().Be(2);
     }
+
+    [Fact]
+    public void MultiplicationShouldWork()
+    {
+        // prepare
+        var engine = new CalculatorEngine();
+
+        // act & assert
+        engine.Solve("2*2").Should().Be(4);
+        engine.Solve("3*2*2").Should().Be(12);
+        engine.Solve("-3*2").Should().Be(-6);
+        engine.Solve("-3*-2").Should().Be(6);
+    }
+
+
+    [Fact]
+    public void DivisionShouldWork()
+    {
+        // prepare
+        var engine = new CalculatorEngine();
+
+        // act & assert
+        engine.Solve("2/2").Should().Be(1);
+        engine.Solve("4/2").Should().Be(2);
+        engine.Solve("-4/2").Should().Be(-2);
+        engine.Solve("-4/-2").Should().Be(2);
+        engine.Solve("-4/1").Should().Be(-4);
+        engine.Solve("0/1").Should().Be(0);
+        Assert.Throws<DivideByZeroException>(() => engine.Solve("0/0"));
+    }
 }
