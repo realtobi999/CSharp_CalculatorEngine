@@ -1,4 +1,4 @@
-namespace Calculator.Core.Models;
+namespace Calculator.Core.Lexer;
 
 public enum MathOperators
 {
@@ -35,4 +35,10 @@ public static class MathOperatorsUtils
                 return false;
         }
     }
+
+    public static bool TryParse(char c, out MathOperators mathOperator)
+    {
+        return TryParse(c.ToString(), out mathOperator);
+    }
+
 }
