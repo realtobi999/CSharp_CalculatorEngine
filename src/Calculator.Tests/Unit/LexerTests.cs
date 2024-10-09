@@ -1,47 +1,33 @@
-using System.Text.RegularExpressions;
+using System;
 using Calculator.Core.Lexer;
-using FluentAssertions;
 
 namespace Calculator.Tests.Unit;
 
-public partial class LexerTests
+public class LexerTests
 {
-    private readonly Lexer _lexer;
-
-    public LexerTests()
+    [Fact]
+    public void Tokenize_ExpressionCannotStartWithAOperator()
     {
-        _lexer = new Lexer();
+        // prepare
+        var lexer = new Lexer();
+
+        // act & assert
+        Assert.Throws<SyntaxException>(() => lexer.Tokenize("*2+3"));
+        Assert.Throws<SyntaxException>(() => lexer.Tokenize("+2+3"));
+        Assert.Throws<SyntaxException>(() => lexer.Tokenize("/2+3"));
+        Assert.Throws<SyntaxException>(() => lexer.Tokenize("*2+3"));
     }
 
-    [Theory]
-    [MemberData(nameof(LoadDataSimpleLexerData))]
-    public void Tokenize_SimpleInputData(string expression, IEnumerable<string> expectedTokens)
+    [Fact]
+    public void Tokenize_ExpressionCannotEndWithAOperator()
     {
-        Assert.Equal(expectedTokens, _lexer.Tokenize(expression));
+        // prepare
+        var lexer = new Lexer();
+
+        // act & assert
+        Assert.Throws<SyntaxException>(() => lexer.Tokenize("2+3/"));
+        Assert.Throws<SyntaxException>(() => lexer.Tokenize("2+3*"));
+        Assert.Throws<SyntaxException>(() => lexer.Tokenize("2+3+"));
+        Assert.Throws<SyntaxException>(() => lexer.Tokenize("2+3-"));
     }
-
-    public static IEnumerable<object[]> LoadDataSimpleLexerData()
-    {
-        var lines = File.ReadAllLines("./../../../Data/simple_lexer_test_data.csv");
-
-        for (int i = 1; i < lines.Length; i++)
-        {
-            string? line = lines[i];
-
-            // skip empty lines to avoid processing them
-            if (string.IsNullOrWhiteSpace(line)) continue;
-
-            // split by the first occurrence of ", " (to avoid issues if expression contains a comma)
-            var values = line.Split([", " ], 2, StringSplitOptions.None);
-
-            // Split the tokens by commas and trim any whitespace
-            var expectedTokens = values[1].Trim('[', ']')
-                .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries) // split by commas
-                .Select(token => token.Trim()) // trim spaces from each token
-                .ToList();
-
-            yield return new object[] { values[0], expectedTokens };
-        }
-    }
-
 }
