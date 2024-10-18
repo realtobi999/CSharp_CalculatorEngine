@@ -15,14 +15,14 @@ public partial class LexerCsvTests
     [MemberData(nameof(LoadDataSimpleLexerData))]
     public void Tokenize_SimpleInputData(string expression, IEnumerable<string> expectedTokens)
     {
-        Assert.Equal(expectedTokens, _lexer.Tokenize(expression));
+        Assert.Equal(expectedTokens, _lexer.Tokenize(expression).Select(t => t.Value));
     }
 
     [Theory]
     [MemberData(nameof(LoadDataComplexLexerData))]
     public void Tokenize_ComplexInputData(string expression, IEnumerable<string> expectedTokens)
     {
-        Assert.Equal(expectedTokens, _lexer.Tokenize(expression));
+        Assert.Equal(expectedTokens, _lexer.Tokenize(expression).Select(t => t.Value));
     }
 
     public static IEnumerable<object[]> LoadDataSimpleLexerData()
