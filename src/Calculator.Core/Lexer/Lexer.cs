@@ -14,14 +14,16 @@ public class Lexer : ILexer
         var number = "";
         for (int i = 0; i < expression.Length; i++)
         {
+            // collect the digits into a number
             if (char.IsDigit(expression[i]))
             {
-                number += expression[i]; // collect the digits into a number
+                number += expression[i]; 
                 continue;
             }
+            // handle decimal points
             else if (expression[i] == '.' && number.Length >= 1 && !number.Contains('.'))
             {
-                number += expression[i]; // handle decimal points
+                number += expression[i]; 
                 continue;
             }
 
@@ -82,7 +84,7 @@ public class Lexer : ILexer
             return (false, new SyntaxException("Expression cannot start with an operator except subtraction."));
         }
 
-        // If all checks pass, return true with no exception
+        // if all checks pass, return true with no exception
         return (true, null);
     }
 }

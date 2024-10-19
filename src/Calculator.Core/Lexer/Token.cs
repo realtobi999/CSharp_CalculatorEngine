@@ -10,7 +10,6 @@ public class Token
 
     public TokenType Type { get; init; }
     public string Value { get; init; }
-    
 }
 
 public enum TokenType {
@@ -21,5 +20,5 @@ public enum TokenType {
     Divide,
     LeftParen,
     RightParen,
+    EndOfExpression
 }
-
