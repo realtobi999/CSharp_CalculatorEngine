@@ -1,9 +1,9 @@
-﻿using Calculator.Core.Lexer;
+﻿using Calculator.Core.Evaluator;
+using Calculator.Core.Lexer;
+using Calculator.Core.Parser;
 
-var lexer = new Lexer();
-var tokens = lexer.Tokenize("*2 + 2*3");
+var tokens = new Lexer().Tokenize("-(2+2)");
+var ast = new Parser(tokens.GetEnumerator()).Parse();
+var result = new Evaluator().Calculate(ast);
 
-foreach (var token in tokens)
-{
-    Console.WriteLine(token);
-}
+Console.WriteLine($"[*] The Result Is: {result}");

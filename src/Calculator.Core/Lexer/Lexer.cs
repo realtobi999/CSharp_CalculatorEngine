@@ -1,3 +1,5 @@
+using System.Security.Principal;
+
 namespace Calculator.Core.Lexer;
 
 public class Lexer : ILexer
@@ -17,13 +19,13 @@ public class Lexer : ILexer
             // collect the digits into a number
             if (char.IsDigit(expression[i]))
             {
-                number += expression[i]; 
+                number += expression[i];
                 continue;
             }
             // handle decimal points
             else if (expression[i] == '.' && number.Length >= 1 && !number.Contains('.'))
             {
-                number += expression[i]; 
+                number += expression[i];
                 continue;
             }
 
@@ -41,7 +43,20 @@ public class Lexer : ILexer
                     tokens.Add(new Token(TokenType.Plus, "+"));
                     break;
                 case '-':
-                    tokens.Add(new Token(TokenType.Minus, "-"));
+                    number += "-";
+
+                    // if the last token is a number or a right parenthesis, add a plus operator
+                    if (tokens.Count > 0 && (tokens.Last().Type == TokenType.Number || tokens.Last().Type == TokenType.RightParen))
+                    {
+                        tokens.Add(new Token(TokenType.Plus, "+"));
+                    }
+                    // if the next character is an opening parenthesis, treat it as a negative number
+                    if (i + 1 < expression.Length && expression[i + 1] == '(')
+                    {
+                        tokens.Add(new Token(TokenType.Number, "-1"));
+                        number = ""; // reset the number, because we set it above
+                        tokens.Add(new Token(TokenType.Multiply, "*"));
+                    }
                     break;
                 case '*':
                     tokens.Add(new Token(TokenType.Multiply, "*"));
