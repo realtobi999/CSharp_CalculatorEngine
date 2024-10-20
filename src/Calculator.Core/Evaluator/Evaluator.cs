@@ -1,3 +1,4 @@
+using Calculator.Core.Exceptions;
 using Calculator.Core.Lexer;
 using Calculator.Core.Parser;
 
@@ -20,7 +21,7 @@ public class Evaluator : IEvaluator
 
             double result;
 
-            // perform operation based on the operator type
+            // perform operation based on the operator type and return the result
             switch (binaryOpNode.Operator)
             {
                 case TokenType.Plus:
@@ -48,13 +49,13 @@ public class Evaluator : IEvaluator
             return new NumberNode(result);
         }
 
-        // handle the case when it's already a NumberNode
-        if (node is not NumberNode numberNode)
+        // if the node is a number node return it
+        if (node is NumberNode numberNode)
         {
-            throw new Exception("Expected a NumberNode.");
+            return numberNode;
         }
 
-        return numberNode;
+        throw new EvaluatingException("Expected a NumberNode, but found a different node type.");
     }
 }
 

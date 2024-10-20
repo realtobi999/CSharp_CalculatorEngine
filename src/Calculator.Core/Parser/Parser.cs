@@ -1,3 +1,4 @@
+using Calculator.Core.Exceptions;
 using Calculator.Core.Lexer;
 
 namespace Calculator.Core.Parser;
@@ -66,13 +67,13 @@ public class Parser : IParser
             CurrentToken = GetNextToken(); // skip the ')'
             return node;
         }
-        
-        // handle numbers
+
         if (CurrentToken.Type != TokenType.Number)
         {
             throw new ParsingException("Unexpected token during primary parsing.");
         }
 
+        // handle numbers
         node = new NumberNode(double.Parse(CurrentToken.Value));
         CurrentToken = GetNextToken();
 

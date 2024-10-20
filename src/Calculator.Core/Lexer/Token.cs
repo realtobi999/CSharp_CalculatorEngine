@@ -12,7 +12,8 @@ public class Token
     public string Value { get; init; }
 }
 
-public enum TokenType {
+public enum TokenType
+{
     Number,
     Plus,
     Minus,

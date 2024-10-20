@@ -1,4 +1,4 @@
-using System;
+using Calculator.Core.Exceptions;
 using Calculator.Core.Lexer;
 
 namespace Calculator.Tests.Unit;
