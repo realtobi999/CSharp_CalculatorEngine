@@ -36,9 +36,24 @@ public class Parser : IParser
 
     private Node ParseMultiplyDivide()
     {
-        var left = ParsePrimary();
+        var left = ParseExponentiation();
 
         while (CurrentToken.Type == TokenType.Multiply || CurrentToken.Type == TokenType.Divide)
+        {
+            var op = CurrentToken.Type;
+            CurrentToken = GetNextToken();
+            var right = ParseExponentiation();
+            left = new BinaryOpNode(left, op, right);
+        }
+
+        return left;
+    }
+
+    private Node ParseExponentiation()
+    {
+        var left = ParsePrimary();
+
+        while (CurrentToken.Type == TokenType.Exponentiation)
         {
             var op = CurrentToken.Type;
             CurrentToken = GetNextToken();

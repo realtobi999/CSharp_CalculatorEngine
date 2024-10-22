@@ -70,6 +70,9 @@ public class Lexer : ILexer
                 case ')':
                     tokens.Add(new Token(TokenType.RightParen, ")"));
                     break;
+                case '^':
+                    tokens.Add(new Token(TokenType.Exponentiation, "^"));
+                    break;
                 default:
                     throw new SyntaxException($"Unexpected character: {expression[i]}");
             }

@@ -19,6 +19,7 @@ public enum TokenType
     Minus,
     Multiply,
     Divide,
+    Exponentiation,
     LeftParen,
     RightParen,
     EndOfExpression

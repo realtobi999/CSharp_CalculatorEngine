@@ -41,6 +41,9 @@ public class Evaluator : IEvaluator
 
                     result = leftNode.Value / rightNode.Value;
                     break;
+                case TokenType.Exponentiation:
+                    result = Math.Pow(leftNode.Value, rightNode.Value);
+                    break;
                 default:
                     throw new NotSupportedException($"Operator '{binaryOpNode.Operator}' is not supported.");
             }
