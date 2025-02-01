@@ -1,60 +1,61 @@
 # Calculator Engine
 
-This is a mini-project build your own ***calculator engine*** utilizing *lexer*, *parser* and an *evaluator* to calculate accurately any arithmetic expression.
+This is a mini-project to build your own **calculator engine** using a *lexer*, *parser*, and an *evaluator* to accurately calculate any arithmetic expression.
 
-## How it all works?
+## How it Works
 
-- We are given a string representation of a basic arithmetic problem like: `2*7+3`
+Given a string representation of a basic arithmetic problem like: `2*7+3`, the process involves the following steps:
 
-### ***1. Lexer***
+### 1. Lexer
 
-- The purpose of a lexer is to ***tokenize*** the input into a collection of tokens that can be easily handled and manipulated.
-- In our example we will tokenize the input into these tokens: `[2,*,7,+,3]`
+The purpose of the lexer is to **tokenize** the input into a collection of tokens that can be easily managed.  
+In our example, we tokenize the input into these tokens: `[2,*,7,+,3]`
 
-***C# Implementation***:
+**C# Implementation**:
 
 ![lexer_implementation](./doc/lexer_implementation.png)
 
-### ***2. Parser***
+### 2. Parser
 
-- The main purpose of a parser is to **connect** the tokens into a meaningful structure.
-- I've chosen to combine the tokens into an Abstract Syntax Tree (AST), take a look at the image for more clarity:
+The parser’s main purpose is to **structure** the tokens meaningfully.  
+In this project, the parser builds an Abstract Syntax Tree (AST) to represent the expression, ensuring order of operations (PEMDAS).  
+See the example below for clarity:
 
 ![ast_example](./doc/ast_example.png)
 
-- With this structure we can more accurately represent the arithmetic expression in a way that will helps us simplifying the evaluation process, and keep order of operations (PEMDAS).
+In this structure, each function handles a level of precedence (e.g., multiplication, addition), recursively breaking down and connecting expression components.
 
-***C# Implementation***
+**C# Implementation**:
 
 ![parser_implementation](./doc/parser_implementation.png)
 
-&emsp;***=>*** We break down the expression into its components (numbers, operators, etc.) by calling different functions. Each function is responsible for handling a particular level of precedence (e.g., multiplication, addition), and recursively calls other functions to process the components of the expression.
+&emsp;**=>** The parser processes expression components through recursive calls that handle various operations until the structure accurately reflects the order of operations.
 
-### ***3. Evaluator***
+### 3. Evaluator
 
-- The final key to the puzzle is to write an evaluator.
-- It's main purpose is to consume the structure given by the parser and spit out a value.
-- In our example it will start at the top of the AST and recursively calculate the nodes at the bottom all the way up to the top.
+The evaluator is the final step, consuming the AST to return a calculated value.  
+In our example, it starts at the top of the AST and recursively calculates values for each node.
 
-***C# Implementation***:
+**C# Implementation**:
 
 ![evaluator_implementation](./doc/evaluator_implementation.png)
 
-&emsp;***=>*** We basically recursively convert every binary op node to a number node and do so until only one number node left and we return its value
+&emsp;**=>** The evaluator recursively reduces every binary operation node to a number node until only one remains, which represents the final result.
 
 ## Testing
 
-- For testing the calculator engine i split the main testing into *two* areas:
+Testing for the calculator engine is divided into two main areas:
 
-### ***Lexer Testing***
+### Lexer Testing
 
-- Something around *80* test cases for the tokenization process.
+- Approximately **80 test cases** cover the tokenization process.
 
-### ***Parser and Evaluator Testing***
+### Parser and Evaluator Testing
 
-- Here I utilized around *100* basic arithmetic test cases coupled with *20* a bit more complex test cases.
+- **100 basic arithmetic test cases** and **20 more complex cases** ensure accuracy.
 
 ## Notes
 
-This project was **very fun** and give me a great look into how more complex calculators are approached. My solution is also very similar to how a compiler works. I've also gained a better understanding of **algorithms** and **recursive programming**.
-I would love to take this project a bit more far and built an equation solver!
+This project was incredibly enjoyable and provided insight into complex calculator logic, similar to a compiler. Through this, I gained a stronger grasp of **algorithms** and **recursive programming**.
+
+I’d love to take this project further and build an equation solver!
