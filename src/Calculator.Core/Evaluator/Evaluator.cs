@@ -13,7 +13,7 @@ public class Evaluator : IEvaluator
 
     private NumberNode Evaluate(Node node)
     {
-        // handle binary operations (e.g. +, -, *, /)
+        // Handle binary operations (e.g. +, -, *, /).
         if (node is BinaryOpNode binaryOpNode)
         {
             var leftNode = Evaluate(binaryOpNode.Left);
@@ -21,7 +21,7 @@ public class Evaluator : IEvaluator
 
             double result;
 
-            // perform operation based on the operator type and return the result
+            // Perform operation based on the operator type and return the result.
             switch (binaryOpNode.Operator)
             {
                 case TokenType.Plus:
@@ -48,11 +48,11 @@ public class Evaluator : IEvaluator
                     throw new NotSupportedException($"Operator '{binaryOpNode.Operator}' is not supported.");
             }
 
-            // return the result wrapped in a NumberNode
+            // Return the result wrapped in a NumberNode.
             return new NumberNode(result);
         }
 
-        // if the node is a number node return it
+        // If the node is a number node return it
         if (node is NumberNode numberNode)
         {
             return numberNode;

@@ -68,10 +68,10 @@ public class Parser : IParser
     {
         Node node;
 
-        // handle parentheses
+        // Handle parentheses.
         if (CurrentToken.Type == TokenType.LeftParen)
         {
-            CurrentToken = GetNextToken(); // skip the '('
+            CurrentToken = GetNextToken(); // Skip the '('.
             node = ParseAddSubtract();
 
             if (CurrentToken.Type != TokenType.RightParen)
@@ -79,7 +79,7 @@ public class Parser : IParser
                 throw new ParsingException("Unexpected token during primary parsing. Expected closing parenthesis");
             }
 
-            CurrentToken = GetNextToken(); // skip the ')'
+            CurrentToken = GetNextToken(); // Skip the ')'.
             return node;
         }
 
@@ -88,7 +88,7 @@ public class Parser : IParser
             throw new ParsingException("Unexpected token during primary parsing.");
         }
 
-        // handle numbers
+        // Handle numbers.
         node = new NumberNode(double.Parse(CurrentToken.Value));
         CurrentToken = GetNextToken();
 
