@@ -2,7 +2,7 @@
 using Calculator.Core.Lexer;
 using Calculator.Core.Parser;
 
-var tokens = new Lexer().Tokenize("-(2)^2");
+var tokens = new Lexer().Tokenize("((2^2+4^2)^0.5)*2");
 var ast = new Parser(tokens.GetEnumerator()).Parse();
 var result = new Evaluator().Calculate(ast);
 
