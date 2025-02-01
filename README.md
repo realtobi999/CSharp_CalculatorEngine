@@ -8,8 +8,8 @@ Given a string representation of a basic arithmetic problem like: `2*7+3`, the p
 
 ### 1. Lexer
 
-The purpose of the lexer is to **tokenize** the input into a collection of tokens that can be easily managed.  
-In our example, we tokenize the input into these tokens: `[2,*,7,+,3]`
+- The purpose of the lexer is to **tokenize** the input into a collection of tokens that can be easily managed.  
+- In our example, we tokenize the input into these tokens: `[2,*,7,+,3]`
 
 **C# Implementation**:
 
@@ -17,8 +17,8 @@ In our example, we tokenize the input into these tokens: `[2,*,7,+,3]`
 
 ### 2. Parser
 
-The parser’s main purpose is to **structure** the tokens meaningfully.  
-In this project, the parser builds an Abstract Syntax Tree (AST) to represent the expression, ensuring order of operations (PEMDAS).  
+- The parser’s main purpose is to **structure** the tokens meaningfully.  
+- In this project, the parser builds an Abstract Syntax Tree (AST) to represent the expression, ensuring order of operations (PEMDAS).  
 See the example below for clarity:
 
 ![ast_example](./doc/ast_example.png)
@@ -33,8 +33,8 @@ In this structure, each function handles a level of precedence (e.g., multiplica
 
 ### 3. Evaluator
 
-The evaluator is the final step, consuming the AST to return a calculated value.  
-In our example, it starts at the top of the AST and recursively calculates values for each node.
+- The evaluator is the final step, consuming the AST to return a calculated value.  
+- In our example, it starts at the top of the AST and recursively calculates values for each node.
 
 **C# Implementation**:
 
